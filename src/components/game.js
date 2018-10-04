@@ -4,6 +4,7 @@ import Header from './header';
 import GuessSection from './guess-section';
 import GuessCount  from './guess-count';
 import GuessList from './guess-list';
+import InfoModal from './info-modal';
 
 export default class Game extends React.Component {
 
@@ -12,8 +13,9 @@ export default class Game extends React.Component {
         this.state = {
             answer: Math.floor(Math.random()*101),
             guesses: [],
-            feedback: 'Submit a guess'
-        }
+            feedback: 'Submit a guess',
+            showInfo: false
+        };
     }
 
     resetGame(){
@@ -59,13 +61,23 @@ export default class Game extends React.Component {
 
     }
 
+    toggleInfo(){
+        console.log('toggleinfo is running');
+        this.setState(prevState => {
+            return {
+                showInfo: !prevState.showInfo
+            };
+        });
+    }
+
     render(){
-        const { guesses, feedback } = this.state;
+        const { guesses, feedback, showInfo } = this.state;
         const count = guesses.length;
 
         return (
             <div>
-                <Header resetGame={() => this.resetGame()}/>
+                {showInfo ? <InfoModal closeInfo={() => this.toggleInfo()}/> : null}
+                <Header resetGame={() => this.resetGame()} openInfo={() => this.toggleInfo()}/>
                 <GuessSection submitGuess={guess => this.submitGuess(guess)} feedback={feedback} />
                 <GuessCount count={count} />
                 <GuessList guesses={guesses} />

@@ -12,7 +12,7 @@ export default function TopNav(props) {
                     </a>
                 </li>
                 <li>
-                    <a className="new" href="#">
+                    <a className="new" href="#" onClick={props.resetGame}>
                         + New Game
                     </a>
                 </li>
